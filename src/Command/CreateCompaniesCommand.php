@@ -7,16 +7,16 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Helper\ProgressBar;
-use App\Entity\Employee;
+use App\Entity\Company;
 use App\Entity\Result;
 
-class CreateEmployeesCommand extends ContainerAwareCommand
+class CreateCompaniesCommand extends ContainerAwareCommand
 {
-    protected static $defaultName = 'mock:create-employees';
+    protected static $defaultName = 'mock:create-companies';
 
     protected function configure()
     {
-        $this->setDescription('Fill in database with mock/employees.json content');
+        $this->setDescription('Fill in database with mock/companies.json content');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -26,14 +26,14 @@ class CreateEmployeesCommand extends ContainerAwareCommand
 
         $io->note('Start filling : ' . $now->format('d/m/Y H:i:s'));
 
-        $this->createEmployees($input, $output);
+        $this->createCompanies($input, $output);
 
         $io->success('End filling : ' . $now->format('d/m/Y H:i:s'));
     }
 
-    private function createEmployees(InputInterface $input, OutputInterface $output)
+    private function createCompanies(InputInterface $input, OutputInterface $output)
     {
-        $mockFile = file_get_contents(__DIR__ . '/../../mock/employees.json');
+        $mockFile = file_get_contents(__DIR__ . '/../../mock/companies.json');
 
         $progress = new ProgressBar($output, 1000);
         $progress->start();
@@ -41,11 +41,11 @@ class CreateEmployeesCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         foreach (json_decode($mockFile) as $mock) {
-            $employee = new Employee();
+            $company = new Company();
             
-            $employee->setName($mock->name);
-            $employee->setSector($mock->sector);
-            $employee->setSiren($mock->siren);
+            $company->setName($mock->name);
+            $company->setSector($mock->sector);
+            $company->setSiren($mock->siren);
 
             foreach ($mock->results as $r) {
                 $result = new Result();
@@ -57,11 +57,11 @@ class CreateEmployeesCommand extends ContainerAwareCommand
                 $result->setYear($r->year);
 
                 $em->persist($result);
-                $employee->addResult($result);
+                $company->addResult($result);
 
             }
 
-            $em->persist($employee);
+            $em->persist($company);
             $em->flush();
 
             $progress->advance(1);

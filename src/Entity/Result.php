@@ -42,10 +42,10 @@ class Result
     private $year;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Employee", inversedBy="results")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="results")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $employee;
+    private $company;
 
     public function getId()
     {
@@ -112,14 +112,14 @@ class Result
         return $this;
     }
 
-    public function getEmployee(): ?Employee
+    public function getCompany(): ?Company
     {
-        return $this->employee;
+        return $this->company;
     }
 
-    public function setEmployee(?Employee $employee): self
+    public function setCompany(?Company $company): self
     {
-        $this->employee = $employee;
+        $this->company = $company;
 
         return $this;
     }

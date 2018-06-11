@@ -7,25 +7,25 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use App\Entity\Employee;
+use App\Entity\Company;
 
 class ResultController extends Controller
 {
     /**
-     * Find all results of a single employee
+     * Find all results of a single company
      *
      * @Rest\View()
-     * @Rest\Get("/employees/{id}/results")
+     * @Rest\Get("/companies/{id}/results")
      */
-    public function getEmployeeResultsAction(Request $request)
+    public function getCompanyResultsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $employee = $em->getRepository(Employee::class)->find($request->get('id'));
+        $company = $em->getRepository(Company::class)->find($request->get('id'));
 
-        if (empty($employee)) {
-            return new JsonResponse(['message' => 'Employee not found'], Response::HTTP_NOT_FOUND);
+        if (empty($company)) {
+            return new JsonResponse(['message' => 'Company not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $employee->getResults();
+        return $company->getResults();
     }
 }
