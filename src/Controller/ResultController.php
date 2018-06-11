@@ -14,7 +14,7 @@ class ResultController extends Controller
     /**
      * Find all results of a single company
      *
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"result"})
      * @Rest\Get("/companies/{id}/results")
      */
     public function getCompanyResultsAction(Request $request)

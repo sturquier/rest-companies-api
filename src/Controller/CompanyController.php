@@ -14,7 +14,7 @@ class CompanyController extends Controller
     /**
      * Find all companies
      *
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"company"})
      * @Rest\Get("/companies")
      */
     public function getCompaniesAction()
@@ -28,7 +28,7 @@ class CompanyController extends Controller
     /**
      * Find a single company
      *
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"company"})
      * @Rest\Get("/companies/{id}")
      */
     public function getCompanyAction(Request $request)

@@ -5,9 +5,14 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CompanyRepository")
+ * @UniqueEntity("name")
+ * @UniqueEntity("siren")
  */
 class Company
 {
@@ -15,26 +20,34 @@ class Company
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"company", "result"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     * @JMS\Groups({"company", "result"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     * @JMS\Groups({"company", "result"})
      */
     private $sector;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @JMS\Groups({"company", "result"})
      */
     private $siren;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="company", orphanRemoval=true)
+     * @JMS\Groups({"result"})
      */
     private $results;
 

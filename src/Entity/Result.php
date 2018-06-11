@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ResultRepository")
@@ -13,37 +14,44 @@ class Result
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"company", "result"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"company", "result"})
      */
     private $ca;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"company", "result"})
      */
     private $margin;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"company", "result"})
      */
     private $ebitda;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"company", "result"})
      */
     private $loss;
 
     /**
      * @ORM\Column(type="integer")
+     * @JMS\Groups({"company", "result"})
      */
     private $year;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="results")
      * @ORM\JoinColumn(nullable=false)
+     * @JMS\Groups({"result"})
      */
     private $company;
 
